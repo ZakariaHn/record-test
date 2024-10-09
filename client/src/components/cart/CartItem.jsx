@@ -16,9 +16,12 @@ const CartItem = ({ item }) => {
     getCartData(cartsDispatch, cartId);
   };
 
-  const handleAddCartItem = async () => {
-    await addCartItem(cartsDispatch, cartsState, record, cartId);
-    getCartData(cartsDispatch, cartId);
+  const handleQuantityChange = async (event) => {
+    const newQuantity = parseInt(event.target.value, 10);
+    if (newQuantity > 0) {
+      await addCartItem(cartsDispatch, cartsState, record, cartId, newQuantity);
+      getCartData(cartsDispatch, cartId);
+    }
   };
 
   return (
@@ -31,7 +34,7 @@ const CartItem = ({ item }) => {
         <input
           type="number"
           value={quantity}
-          onChange={() => handleAddCartItem(record)}
+          onChange={handleQuantityChange}
           className="item__quantity"
         />
         <AiTwotoneDelete

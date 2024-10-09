@@ -14,23 +14,24 @@ export const addCartItem = async (
   cartsDispatch,
   cartsState,
   record,
-  cartId
+  cartId,
+  newQuantity // Add this parameter to handle the updated quantity
 ) => {
   try {
-    //! check for item existance in the state
+    //! Check for item existence in the state
     const itemToUpdate = cartsState.items?.find(
       (item) => item.record._id === record._id
     );
 
     /* 
-   ! If item is exist: 
-      * create patch request to update the quantity of the item in DB and increase it by one
+   ! If item exists: 
+      * Create patch request to update the quantity of the item in DB with the provided new quantity
       * Update the state with the new changes 
       * return to exit the function
    */
     if (itemToUpdate) {
       const response = await axios.patch(`/carts/${cartId}`, {
-        quantity: itemToUpdate.quantity + 1,
+        quantity: newQuantity,
         record: record._id,
       });
 
@@ -41,7 +42,7 @@ export const addCartItem = async (
     //! Otherwise submit the new item to the DB
     const response = await axios.post(`/carts/${cartId}`, {
       record: record._id,
-      quantity: 1,
+      quantity: newQuantity, // Use the new quantity
     });
 
     cartsDispatch({ type: "ADD_CART_DATA", payload: response.data.data });

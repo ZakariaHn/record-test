@@ -55,12 +55,12 @@ export const addCartItem = async (req, res, next) => {
 */
 export const updateItemFieldById = async (req, res, next) => {
   try {
-    const { recordId, quantity } = req.body;
+    const { record, quantity } = req.body;
 
     const cart = await Cart.findByIdAndUpdate(
       req.params.id,
       { $set: { "items.$[item].quantity": quantity } },
-      { arrayFilters: [{ "item.record": recordId }], new: true }
+      { arrayFilters: [{ "item.record": record }], new: true }
     ).populate("items.record");
 
     successHandler(res, 200, cart);
