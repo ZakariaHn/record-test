@@ -4,16 +4,11 @@ import RecordCard from "./RecordCard";
 import "../styles/RecordsList.scss";
 import { DataContext } from "../contexts/Context";
 import NoGenreFound from "./NoGenreFound";
-import { getAllRecords } from "../api/recordsApi";
 
 const RecordsList = () => {
   const { recordsState, recordsDispatch } = useContext(DataContext);
 
   const { genre } = useParams();
-
-  useEffect(() => {
-    getAllRecords(recordsDispatch);
-  }, []);
 
   const filteredRecords = genre
     ? recordsState.data.filter((record) =>
