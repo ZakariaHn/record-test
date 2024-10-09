@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
 import RecordCard from "./RecordCard";
 import "../styles/RecordsList.scss";
@@ -6,7 +6,7 @@ import { DataContext } from "../contexts/Context";
 import NoGenreFound from "./NoGenreFound";
 
 const RecordsList = () => {
-  const { recordsState, recordsDispatch } = useContext(DataContext);
+  const { recordsState } = useContext(DataContext);
 
   const { genre } = useParams();
 
